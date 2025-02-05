@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool areAlmostEqual(string s1, string s2) {
+        int n = s1.length();
+        int cnt = 0;
+        vector<int> alpha1(26, 0), alpha2(26, 0);
+        for (int i = 0; i < n; i++) {
+            alpha1[s1[i] - 'a']++;
+            alpha2[s2[i] - 'a']++;
+        }
+
+        for (int i = 0; i < n; i++) {
+
+            if (s1[i] != s2[i])
+                cnt++;
+            if (alpha1[s1[i] - 'a'] != alpha2[s1[i] - 'a'])
+                return false;
+        }
+        if (cnt == 0 or cnt == 2)
+            return true;
+        return false;
+    }
+};
