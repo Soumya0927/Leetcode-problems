@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int tupleSameProduct(vector<int>& nums) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        int totTuple = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = n - 1; j >= i + 1; j--) {
+                int product = nums[i] * nums[j];
+                unordered_set<int> possibleDvalues;
+                for (int k = i + 1; k < j; k++) {
+                    if (product % nums[k] == 0) {
+                        int dvalue = product / nums[k];
+                        if (possibleDvalues.find(dvalue) !=
+                            possibleDvalues.end())
+                            totTuple += 8;
+                        possibleDvalues.insert(nums[k]);
+                    }
+                }
+            }
+        }
+        return totTuple;
+    }
+};
