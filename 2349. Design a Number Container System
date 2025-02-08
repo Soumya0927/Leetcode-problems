@@ -1,0 +1,37 @@
+class NumberContainers {
+public:
+    NumberContainers() {}
+
+    void change(int index, int number) {
+        // check if the given index holds any number
+        if (indexToNumber.find(index) != indexToNumber.end()) {
+            int previousNumber = indexToNumber[index];
+            // remove the index from set of indices associated with that number
+            numberToIndices[previousNumber].erase(index);
+
+            if (numberToIndices[previousNumber].empty())
+                // remove the number if it is the only index storing that number
+                numberToIndices.erase(previousNumber);
+        }
+        // update indexToNumber & numberToIndices
+        indexToNumber[index] = number;
+        numberToIndices[number].insert(index);
+    }
+
+    int find(int number) {
+        if (numberToIndices.find(number) != numberToIndices.end())
+            return *numberToIndices[number].begin();
+        return -1;
+    }
+
+private:
+    unordered_map<int, set<int>> numberToIndices;
+    unordered_map<int, int> indexToNumber;
+};
+
+/**
+ * Your NumberContainers object will be instantiated and called as such:
+ * NumberContainers* obj = new NumberContainers();
+ * obj->change(index,number);
+ * int param_2 = obj->find(number);
+ */
